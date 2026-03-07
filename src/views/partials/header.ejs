@@ -7,11 +7,22 @@
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/organizations">Organizations</a></li>
-            <li><a href="/projects">Projects</a></li>
-            <li><a href="/categories">Categories</a></li>
-        </ul>
-    </nav>
+<nav>
+  <div class="nav-container">
+
+    <!-- Hidden checkbox for toggling menu -->
+    <input type="checkbox" id="menu-toggle" />
+    <label for="menu-toggle" class="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+
+    <ul id="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/organizations">Organizations</a></li>
+      <li><a href="/projects">Projects</a></li>
+      <li><a href="/categories">Categories</a></li>
+    </ul>
+  </div>
+</nav>
