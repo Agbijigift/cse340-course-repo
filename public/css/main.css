@@ -194,13 +194,15 @@ list-style:none;
 
 main ul li{
 background:white;
-padding:1.5rem;
+padding:2rem;
 border-radius:14px;
 box-shadow:0 8px 20px rgba(0,0,0,0.05);
 transition:0.3s;
 display:flex;
+flex-direction:column;
 align-items:center;
 gap:1rem;
+text-align:center;
 }
 
 main ul li:hover{
@@ -211,12 +213,12 @@ box-shadow:0 15px 35px rgba(0,0,0,0.1);
 /* ORGANIZATION LOGO */
 
 main ul li img{
-width:55px;
-height:55px;
+width:80px;
+height:80px;
 object-fit:contain;
 background:#f3f4f6;
-padding:6px;
-border-radius:10px;
+padding:10px;
+border-radius:12px;
 flex-shrink:0;
 }
 
@@ -229,13 +231,16 @@ min-width:0;
 }
 
 .org-info strong{
-font-size:1rem;
+font-size:1.1rem;
+font-weight:600;
+color:#1f2937;
 }
 
 .org-info span{
 font-size:0.9rem;
 color:#6b7280;
 word-break:break-word;
+margin-top:0.25rem;
 }
 
 /* CATEGORY CARDS */
