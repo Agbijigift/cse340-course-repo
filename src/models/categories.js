@@ -1,11 +1,15 @@
 import db from './db.js'
 
-async function getAllCategories() {
-  const result = await db.query(
+const getAllCategories = async() => {
+  const query = `
     "SELECT category_id, name FROM categories ORDER BY name"
-  )
-
+  `
+  const result = await db.query(query);
   return result.rows
 }
 
 export { getAllCategories }
+
+
+
+
