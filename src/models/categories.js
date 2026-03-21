@@ -1,14 +1,58 @@
-import db from './db.js'
+import db from './db.js';
 
-const getAllCategories = async() => {
+// Existing function
+const getAllCategories = async () => {
   const query = `
     SELECT category_id, name FROM categories ORDER BY name
-  `
+  `;
   const result = await db.query(query);
-  return result.rows
-}
+  return result.rows;
+};
 
-export { getAllCategories }
+// Retrieve a single category by ID
+const getCategoryById = async (id) => {
+  const query = `
+    SELECT category_id, name
+    FROM categories
+    WHERE category_id = $1
+  `;
+  const result = await db.query(query, [id]);
+  return result.rows[0]; // single category object
+};
+
+// Retrieve all categories for a given service project
+const getCategoriesByProject = async (projectId) => {
+  const query = `
+    SELECT c.category_id, c.name
+    FROM categories c
+    JOIN project_categories pc ON c.category_id = pc.category_id
+    WHERE pc.project_id = $1
+    ORDER BY c.name
+  `;
+  const result = await db.query(query, [projectId]);
+  return result.rows; // array of categories
+};
+
+// Retrieve all service projects for a given category
+const getProjectsByCategory = async (categoryId) => {
+  const query = `
+    SELECT p.project_id, p.title, p.description, p.event_date, p.location, p.organization_id, o.name AS organization_name
+    FROM projects p
+    JOIN project_categories pc ON p.project_id = pc.project_id
+    JOIN organization o ON p.organization_id = o.organization_id
+    WHERE pc.category_id = $1
+    ORDER BY p.event_date ASC
+  `;
+  const result = await db.query(query, [categoryId]);
+  return result.rows; // array of projects
+};
+
+export {
+  getAllCategories,
+  getCategoryById,
+  getCategoriesByProject,
+  getProjectsByCategory
+};
 
 
 
