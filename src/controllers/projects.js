@@ -5,7 +5,7 @@ import { createProject } from '../models/projects.js';
 import {getAllOrganizations } from '../models/organizations.js';
 import { updateProject } from '../models/projects.js';
 import { getAllCategories } from '../models/categories.js';
-
+import {assignCategoryToProject} from '../models/categories.js';
 
 const projectValidation = [
     body('title')

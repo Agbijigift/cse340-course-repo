@@ -76,6 +76,7 @@ export {
   getCategoriesByProject,
   getProjectsByCategory,
   updateCategoryAssignments,
+  assignCategoryToProject
   
 };
 
