@@ -3,6 +3,8 @@ import { getUpcomingProjects, getProjectDetails } from '../models/projects.js';
 import { getCategoriesByProject } from '../models/categories.js';
 import { createProject } from '../models/projects.js';
 import {getAllOrganizations } from '../models/organizations.js';
+import { updateProject } from '../models/projects.js';
+import { getAllCategories } from '../models/categories.js';
 
 
 const projectValidation = [
@@ -53,30 +55,37 @@ const showProjectDetailsPage = async (req, res) => {
 
 const showNewProjectForm = async (req, res) => {
     const organizations = await getAllOrganizations();
+    const categories = await getAllCategories();   // <-- fetch categories
     const title = 'Add New Service Project';
 
-    res.render('new-project', { title, organizations });
-}
+    res.render('new-project', { title, organizations, categories }); // <-- pass to view
+};
+
 
 const processNewProjectForm = async (req, res) => {
     // Extract form data from req.body
-    const { title, description, location, date, organizationId } = req.body;
+    const { title, description, location, date, organizationId, categoryIds } = req.body;
     
     // Check for validation errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        // Loop through validation errors and flash them
         errors.array().forEach((error) => {
             req.flash('error', error.msg);
         });
-
-        // Redirect back to the new project form
         return res.redirect('/new-project');
     }
 
     try {
         // Create the new project in the database
         const newProjectId = await createProject(title, description, location, date, organizationId);
+
+        // ✅ Added: assign categories to the project
+        if (categoryIds) {
+            const ids = Array.isArray(categoryIds) ? categoryIds : [categoryIds];
+            for (const categoryId of ids) {
+                await assignCategoryToProject(categoryId, newProjectId);
+            }
+        }
 
         req.flash('success', 'New service project created successfully!');
         res.redirect(`/project/${newProjectId}`);
@@ -85,6 +94,66 @@ const processNewProjectForm = async (req, res) => {
         req.flash('error', 'There was an error creating the service project.');
         res.redirect('/new-project');
     }
-}
+};
 
-export { showProjectsPage, showProjectDetailsPage, showNewProjectForm, processNewProjectForm, projectValidation };
+
+const showEditProjectForm = async (req, res) => {
+    const projectId = req.params.id;
+
+    try {
+        // Get existing project data
+        const project = await getProjectDetails(projectId);
+
+        // Get all organizations for dropdown
+        const organizations = await getAllOrganizations();
+
+        const title = 'Edit Service Project';
+
+        // Send data to EJS form
+        res.render('edit-project', { title, project, organizations });
+
+    } catch (error) {
+        console.error('Error loading edit project form:', error);
+        req.flash('error', 'Unable to load edit form.');
+        res.redirect('/projects');
+    }
+};
+
+const processEditProjectForm = async (req, res) => {
+    const projectId = req.params.id;
+
+    const { title, description, location, date, organizationId } = req.body;
+
+    // Validate input
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        errors.array().forEach((error) => {
+            req.flash('error', error.msg);
+        });
+
+        return res.redirect(`/edit-project/${projectId}`);
+    }
+
+    try {
+        // Update project in DB
+        await updateProject(
+            projectId,
+            title,
+            description,
+            location,
+            date,
+            organizationId
+        );
+
+        req.flash('success', 'Project updated successfully!');
+        res.redirect(`/project/${projectId}`);
+
+    } catch (error) {
+        console.error('Error updating project:', error);
+        req.flash('error', 'Error updating project.');
+        res.redirect(`/edit-project/${projectId}`);
+    }
+};
+
+export { showProjectsPage, showProjectDetailsPage, 
+    showNewProjectForm, processNewProjectForm, showEditProjectForm, processEditProjectForm, projectValidation };

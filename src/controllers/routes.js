@@ -15,6 +15,10 @@ import { processNewProjectForm } from './projects.js';
 import { projectValidation } from './projects.js';
 import {showAssignCategoriesForm } from './categories.js';
 import { processAssignCategoriesForm } from './categories.js';
+import { 
+  showEditProjectForm, 
+  processEditProjectForm
+} from './projects.js';
 
 const router = express.Router();
 
@@ -34,7 +38,11 @@ router.get('/category/:id', showCategoryDetailsPage);
 router.get('/new-organization', showNewOrganizationForm);
 
 
+// Show edit form
+router.get('/edit-project/:id', showEditProjectForm);
 
+// Process form submission
+router.post('/edit-project/:id', projectValidation, processEditProjectForm);
 // Route to handle new organization form submission
 router.post('/new-organization', organizationValidation, processNewOrganizationForm);
 
@@ -55,6 +63,8 @@ router.post('/new-project', processNewProjectForm, projectValidation);
 router.get('/assign-categories/:projectId', showAssignCategoriesForm);
 router.post('/assign-categories/:projectId', processAssignCategoriesForm);
 // error-handling routes
+
+
 router.get('/test-error', testErrorPage);
 
 

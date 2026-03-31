@@ -29,13 +29,15 @@
 
 
 
-    <% const messages = flash(); %>
-    <% Object.keys(messages).forEach(type => { %>
-        <% if (messages[type].length > 0) { %>
-            
-                <% messages[type].forEach(msg => { %>
-                    <%= msg %>
-                <% }); %>
-            
-        <% } %>
+ <% const messages = flash(); %>
+<% Object.keys(messages).forEach(type => { %>
+  <% if (messages[type].length > 0) { %>
+    <% messages[type].forEach(msg => { %>
+      <div class="alert <%= type %>">
+        <%= msg %>
+        <button class="close">&times;</button>
+      </div>
     <% }); %>
+  <% } %>
+<% }); %>
+

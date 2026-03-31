@@ -1,6 +1,6 @@
 <%- include('partials/header') %>
 
-<main>
+<main id="project-details-page">
     <h1><%= project.title %></h1>
 
     <p>
@@ -32,6 +32,8 @@
     <% } %>
 
     <a href="/assign-categories/<%= project.project_id %>">Edit Categories</a>
+
+    <a href="/edit-project/<%= project.project_id %>">Edit Project</a>
 </main>
 
 <%- include('partials/footer') %>
