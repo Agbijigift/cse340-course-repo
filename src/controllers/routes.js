@@ -3,7 +3,7 @@ import express from 'express';
 import { showHomePage } from './index.js';
 import { showOrganizationsPage, showOrganizationDetailsPage } from './organizations.js';
 import { showProjectsPage, showProjectDetailsPage } from './projects.js';
-import { showCategoriesPage, showCategoryDetailsPage } from './categories.js';
+import { showCategoriesPage, showCategoryDetailsPage, showAssignCategoriesForm, processAssignCategoriesForm, showNewCategoryForm, processNewCategoryForm, showEditCategoryForm, processEditCategoryForm, processDeleteCategory, categoryValidation } from './categories.js';
 import { testErrorPage } from './errors.js';
 import {showNewOrganizationForm} from './organizations.js';
 import { processNewOrganizationForm } from './organizations.js';
@@ -13,8 +13,6 @@ import { processEditOrganizationForm } from './organizations.js';
 import { showNewProjectForm } from './projects.js';
 import { processNewProjectForm } from './projects.js';
 import { projectValidation } from './projects.js';
-import {showAssignCategoriesForm } from './categories.js';
-import { processAssignCategoriesForm } from './categories.js';
 import { 
   showEditProjectForm, 
   processEditProjectForm
@@ -34,6 +32,12 @@ router.get('/categories', showCategoriesPage);
 // New route for single category details page
 router.get('/category/:id', showCategoryDetailsPage);
 
+// Category CRUD routes
+router.get('/new-category', showNewCategoryForm);
+router.post('/new-category', categoryValidation, processNewCategoryForm);
+router.get('/edit-category/:id', showEditCategoryForm);
+router.post('/edit-category/:id', categoryValidation, processEditCategoryForm);
+router.post('/delete-category/:id', processDeleteCategory);
 
 router.get('/new-organization', showNewOrganizationForm);
 
@@ -57,7 +61,7 @@ router.post('/edit-organization/:id', organizationValidation, processEditOrganiz
 router.get('/new-project', showNewProjectForm);
 
 // Route to handle new project form submission
-router.post('/new-project', processNewProjectForm, projectValidation);
+router.post('/new-project', projectValidation, processNewProjectForm);
 
 // Routes to handle the assign categories to project form
 router.get('/assign-categories/:projectId', showAssignCategoriesForm);

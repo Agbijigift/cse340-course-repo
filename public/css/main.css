@@ -519,47 +519,92 @@ main p {
   flex: 1;
   padding: 2rem 1rem;
   text-align: center;
-  background: #f9f9f9;
+  background: linear-gradient(135deg, #f9f9f9, #eef2f3);
+  min-height: 100vh;
 }
 
 #categories-page h1 {
-  font-size: 2.4rem;
-  color: #2c3e50;
-  margin-bottom: 1.5rem;
+  font-size: 2.6rem;
+  color: #34495e;
+  margin-bottom: 2rem;
   font-weight: 700;
+  letter-spacing: 1px;
 }
 
-/* Category list */
-#categories-page ul {
-  list-style: none;
-  padding: 0;
-  margin: 0 auto;
-  max-width: 700px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-}
-
-#categories-page ul li {
-  flex: 1 1 200px;
-}
-
-#categories-page ul li a {
-  display: block;
-  background: #0077cc; /* Clear blue for links */
+/* Add New Category link */
+#categories-page p a {
+  display: inline-block;
+  background: #27ae60;
   color: white;
-  padding: 0.8rem 1.2rem;
+  padding: 0.6rem 1.2rem;
   border-radius: 6px;
   text-decoration: none;
   font-weight: 600;
   transition: background 0.3s ease, transform 0.2s ease;
 }
 
-#categories-page ul li a:hover {
-  background: #f39c12; /* Golden accent */
-  color: #2c3e50;
+#categories-page p a:hover {
+  background: #2ecc71;
   transform: translateY(-2px);
+}
+
+/* Category list */
+#categories-page ul {
+  list-style: none;
+  padding: 0;
+  margin: 2rem auto 0;
+  max-width: 800px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.2rem;
+}
+
+#categories-page ul li {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+#categories-page ul li:hover {
+  transform: translateY(-3px);
+}
+
+/* Category links */
+#categories-page ul li a {
+  display: inline-block;
+  margin: 0.3rem;
+  background: #0077cc;
+  color: white;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+#categories-page ul li a:hover {
+  background: #f39c12;
+  color: #2c3e50;
+}
+
+/* Delete button */
+#categories-page ul li form button {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.3s ease;
+}
+
+#categories-page ul li form button:hover {
+  background: #c0392b;
 }
 
 /* Responsive adjustments */
@@ -569,15 +614,10 @@ main p {
   }
 
   #categories-page ul {
-    flex-direction: column;
-    gap: 0.8rem;
-  }
-
-  #categories-page ul li a {
-    font-size: 1rem;
-    padding: 0.7rem 1rem;
+    grid-template-columns: 1fr;
   }
 }
+
 
 /* Project Details Page */
 #project-details-page {

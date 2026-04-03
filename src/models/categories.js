@@ -20,6 +20,35 @@ const getCategoryById = async (id) => {
   return result.rows[0]; // single category object
 };
 
+const createCategory = async (name) => {
+  const query = `
+    INSERT INTO categories (name)
+    VALUES ($1)
+    RETURNING category_id, name
+  `;
+  const result = await db.query(query, [name]);
+  return result.rows[0];
+};
+
+const updateCategory = async (categoryId, name) => {
+  const query = `
+    UPDATE categories
+    SET name = $2
+    WHERE category_id = $1
+    RETURNING category_id, name
+  `;
+  const result = await db.query(query, [categoryId, name]);
+  return result.rows[0];
+};
+
+const deleteCategory = async (categoryId) => {
+  const query = `
+    DELETE FROM categories
+    WHERE category_id = $1
+  `;
+  await db.query(query, [categoryId]);
+};
+
 // Retrieve all categories for a given service project
 const getCategoriesByProject = async (projectId) => {
   const query = `
@@ -73,11 +102,13 @@ const updateCategoryAssignments = async(projectId, categoryIds) => {
 export {
   getAllCategories,
   getCategoryById,
+  createCategory,
+  updateCategory,
+  deleteCategory,
   getCategoriesByProject,
   getProjectsByCategory,
   updateCategoryAssignments,
   assignCategoryToProject
-  
 };
 
 

@@ -79,7 +79,7 @@ const processNewProjectForm = async (req, res) => {
         // Create the new project in the database
         const newProjectId = await createProject(title, description, location, date, organizationId);
 
-        // ✅ Added: assign categories to the project
+        // Added: assign categories to the project
         if (categoryIds) {
             const ids = Array.isArray(categoryIds) ? categoryIds : [categoryIds];
             for (const categoryId of ids) {
