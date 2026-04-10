@@ -133,3 +133,14 @@ CREATE TABLE users (
     role_id INTEGER REFERENCES roles(role_id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- ========================================
+-- Create Volunteers Table
+-- This handles the many-to-many relationship between users and projects
+-- ========================================
+CREATE TABLE volunteers (
+    user_id INTEGER NOT NULL REFERENCES users(user_id),
+    project_id INTEGER NOT NULL REFERENCES projects(project_id),
+    volunteered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, project_id)
+);

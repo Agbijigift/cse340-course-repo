@@ -6,6 +6,7 @@ import {getAllOrganizations } from '../models/organizations.js';
 import { updateProject } from '../models/projects.js';
 import { getAllCategories } from '../models/categories.js';
 import {assignCategoryToProject} from '../models/categories.js';
+import { addVolunteer, removeVolunteer, isUserVolunteering } from '../models/volunteers.js';
 
 const projectValidation = [
     body('title')
@@ -45,10 +46,17 @@ const showProjectDetailsPage = async (req, res) => {
   const project = await getProjectDetails(projectId);
   const categories = await getCategoriesByProject(projectId);
 
+  // Check if user is logged in and volunteering for this project
+  let isVolunteering = false;
+  if (req.session && req.session.user) {
+    isVolunteering = await isUserVolunteering(req.session.user.user_id, projectId);
+  }
+
   res.render('project', {
     title: project.title,
     project,
-    categories
+    categories,
+    isVolunteering
   });
 };
 
@@ -155,5 +163,35 @@ const processEditProjectForm = async (req, res) => {
     }
 };
 
+const volunteerForProject = async (req, res) => {
+    const projectId = req.params.id;
+    const userId = req.session.user.user_id;
+
+    try {
+        await addVolunteer(userId, projectId);
+        req.flash('success', 'You have successfully volunteered for this project!');
+        res.redirect(`/project/${projectId}`);
+    } catch (error) {
+        console.error('Error volunteering for project:', error);
+        req.flash('error', 'There was an error volunteering for this project.');
+        res.redirect(`/project/${projectId}`);
+    }
+};
+
+const unvolunteerForProject = async (req, res) => {
+    const projectId = req.params.id;
+    const userId = req.session.user.user_id;
+
+    try {
+        await removeVolunteer(userId, projectId);
+        req.flash('success', 'You have been removed from this project.');
+        res.redirect(`/project/${projectId}`);
+    } catch (error) {
+        console.error('Error unvolunteering for project:', error);
+        req.flash('error', 'There was an error removing you from this project.');
+        res.redirect(`/project/${projectId}`);
+    }
+};
+
 export { showProjectsPage, showProjectDetailsPage, 
-    showNewProjectForm, processNewProjectForm, showEditProjectForm, processEditProjectForm, projectValidation };
+    showNewProjectForm, processNewProjectForm, showEditProjectForm, processEditProjectForm, projectValidation, volunteerForProject, unvolunteerForProject };

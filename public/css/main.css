@@ -646,88 +646,120 @@ main p a:hover {
 /* Project Details Page */
 #project-details-page {
   flex: 1;
-  padding: 2rem 1rem;
-  max-width: 800px;
-  margin: 0 auto;
-  background: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-}
-
-#project-details-page h1 {
-  font-size: 2.4rem;
-  color: #2c3e50;
-  margin-bottom: 1.5rem;
-  font-weight: 700;
+  padding: 3rem 1.5rem;
+  background: linear-gradient(135deg, #f9f9f9, #eef2f3);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
 }
 
-/* Detail paragraphs */
-#project-details-page p {
-  font-size: 1.1rem;
-  color: #555;
-  margin: 1rem 0;
-  line-height: 1.6;
+/* Headings */
+#project-details-page h1 {
+  font-size: 2.6rem;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
 }
 
 #project-details-page strong {
-  color: #2c3e50;
+  color: #34495e;
 }
 
-/* Links inside details */
-#project-details-page a {
-  font-weight: 600;
-  color: #0077cc; /* Clear blue for links */
-  text-decoration: none;
-  transition: color 0.3s ease;
+/* Paragraphs */
+#project-details-page p {
+  font-size: 1.1rem;
+  color: #555;
+  margin: 0.8rem 0;
+  max-width: 700px;
+  line-height: 1.6;
 }
 
-#project-details-page a:hover {
-  color: #f39c12; /* Golden accent */
-  text-decoration: underline;
-}
-
-/* Action links (Edit Categories, Edit Project) */
-#project-details-page a[href*="edit"],
-#project-details-page a[href*="assign-categories"] {
+/* Inline links (organization + categories) */
+#project-details-page p a {
   display: inline-block;
-  margin: 1rem 0.5rem 0 0.5rem;
   background: #0077cc;
   color: white;
-  padding: 0.7rem 1.2rem;
-  border-radius: 5px;
-  text-decoration: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  margin: 0 0.2rem;
   font-weight: 600;
-  transition: background 0.3s ease;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
-#project-details-page a[href*="edit"]:hover,
-#project-details-page a[href*="assign-categories"]:hover {
+#project-details-page p a:hover {
   background: #f39c12;
   color: #2c3e50;
+  transform: translateY(-2px);
+}
+
+/* Admin action links styled as buttons */
+#project-details-page > a {
+  display: inline-block;
+  background: #0077cc;
+  color: white;
+  padding: 0.8rem 1.2rem;
+  border-radius: 6px;
+  margin: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+#project-details-page > a:hover {
+  background: #f39c12;
+  color: #2c3e50;
+  transform: translateY(-2px);
+}
+
+/* Volunteer buttons */
+#project-details-page form button {
+  background: #27ae60;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+#project-details-page form button:hover {
+  background: #2ecc71;
+  transform: translateY(-2px);
+}
+
+/* Unvolunteer button variation */
+#project-details-page form[action*="unvolunteer"] button {
+  background: #e74c3c;
+}
+
+#project-details-page form[action*="unvolunteer"] button:hover {
+  background: #c0392b;
 }
 
 /* Responsive adjustments */
 @media (max-width: 600px) {
-  #project-details-page {
-    padding: 1.5rem 1rem;
-  }
-
   #project-details-page h1 {
     font-size: 2rem;
   }
 
   #project-details-page p {
     font-size: 1rem;
+    padding: 0 1rem;
   }
 
-  #project-details-page a[href*="edit"],
-  #project-details-page a[href*="assign-categories"] {
-    display: block;
-    margin: 0.8rem auto;
-    width: 80%;
+  #project-details-page p a,
+  #project-details-page > a,
+  #project-details-page form button {
+    font-size: 0.95rem;
+    padding: 0.6rem 0.9rem;
   }
 }
+
 
 /* Organization Details Page */
 #organization-details-page {
@@ -1608,9 +1640,17 @@ main p a:hover {
 }
 
 #dashboard h2 {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   color: #34495e;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+#dashboard h3 {
+  font-size: 1.4rem;
+  color: #0077cc;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
   font-weight: 600;
 }
 
@@ -1621,6 +1661,53 @@ main p a:hover {
   margin: 0.6rem 0;
 }
 
+/* Volunteered projects list */
+#dashboard ul {
+  list-style: none;
+  padding: 0;
+  max-width: 800px;
+  width: 100%;
+}
+
+#dashboard li {
+  background: white;
+  margin: 0.6rem 0;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-align: left;
+  font-size: 1rem;
+}
+
+#dashboard li a {
+  color: #0077cc;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+#dashboard li a:hover {
+  color: #f39c12;
+}
+
+/* Remove button */
+#dashboard li form button {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 0.8rem;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+#dashboard li form button:hover {
+  background: #c0392b;
+  transform: translateY(-2px);
+}
+
 /* Admin link styled as button */
 #dashboard p a {
   display: inline-block;
@@ -1628,8 +1715,9 @@ main p a:hover {
   color: white;
   padding: 0.8rem 1.2rem;
   border-radius: 6px;
-  text-decoration: none;
+  margin-top: 1.5rem;
   font-weight: 600;
+  text-decoration: none;
   transition: background 0.3s ease, transform 0.2s ease;
 }
 
@@ -1646,13 +1734,24 @@ main p a:hover {
   }
 
   #dashboard h2 {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
   }
 
-  #dashboard p {
-    font-size: 1rem;
+  #dashboard h3 {
+    font-size: 1.2rem;
+  }
+
+  #dashboard li {
+    font-size: 0.95rem;
+    padding: 0.8rem;
+  }
+
+  #dashboard li form button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
   }
 }
+
 
 /* Users Page */
 #users-page {

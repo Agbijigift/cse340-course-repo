@@ -17,6 +17,7 @@ import {
   showEditProjectForm, 
   processEditProjectForm
 } from './projects.js';
+import { volunteerForProject, unvolunteerForProject } from './projects.js';
 import { showUserRegistrationForm, processUserRegistrationForm, showLoginForm, processLoginForm, processLogout, requireLogin, showDashboard, requireRole, showUsersPage } from './users.js';
 
 const router = express.Router();
@@ -27,6 +28,10 @@ router.get('/organization/:id', showOrganizationDetailsPage);
 
 router.get('/projects', showProjectsPage);
 router.get('/project/:id', showProjectDetailsPage);
+
+// Volunteer routes (protected by requireLogin)
+router.post('/project/:id/volunteer', requireLogin, volunteerForProject);
+router.post('/project/:id/unvolunteer', requireLogin, unvolunteerForProject);
 
 router.get('/categories', showCategoriesPage);
 
